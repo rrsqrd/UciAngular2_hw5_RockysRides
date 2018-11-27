@@ -1,0 +1,48 @@
+﻿<div class="navbar navbar-inverse bg-inverse">    
+	<div class="navbar-brand font-italic font-weight-bold" style="font-size:40px;color:red">ROCKYS RIDES</div>	
+
+	<div class="pull-md-center">
+		<small>
+			Your cart:
+			<span *ngIf="cart.itemCount > 0">
+				{{ cart.itemCount }} item(s)
+				{{ cart.cartPrice | currency:"USD":true:"2.2-2" }}
+			</span>
+			<span *ngIf="cart.itemCount == 0">
+				(empty)
+			</span>
+		</small>
+		<button class="btn btn-sm bg-inverse" [disabled]="cart.itemCount == 0"
+				routerLink="/cart"> 
+			<i class="fa fa-shopping-cart" style="font-size:40px;color:red"></i> 
+		</button>
+	</div>
+</div>  
+
+<div class="col-xs-10 p-a-1">
+	<h5 class="panel-body" style="font-size:20px;color:red">Products</h5>
+	<table class="table table-sm table-striped">
+		<thead>
+			<tr style="background-color:LightSteelBlue">
+				<!-- <th>ID</th> -->
+				<th>Name</th><th>Category</th><th>Price</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let product of products">
+				<!-- <td>{{product.id}}</td> -->
+				<td>{{product.name}}</td>
+				<td>{{product.category}}</td>
+				<td>{{product.price | currency:"USD":true:"2.2-2"}}</td>
+				<td>
+					<button class="btn btn-primary btn-sm pull-xs-right"
+						(click)="addProductToCart(product)">
+					Add To Cart
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>	
+</div>
+<paOrderTable></paOrderTable>

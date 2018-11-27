@@ -1,0 +1,34 @@
+<div class="col-xs-8 p-a-1" *ngIf="getOrders().length > 0">
+	<div>
+		<h5 class="col-lg-2" style="font-size:20px;color:red">Orders</h5>
+		<div class="col-sm-2">
+			<button class="btn btn-primary btn-sm"
+				(click)="deleteOrderHistory()">
+			Clear Orders
+			</button>		  
+		</div>
+	</div>
+
+	<table class="table table-sm table-borded">
+		<thead>
+			<tr style="background-color:LightSteelBlue">
+				<th colspan="2">Order Number</th><th></th> <th></th> <th>Total Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<template ngFor let-o [ngForOf]="getOrders()">
+				<tr>
+					<td colspan="2">{{o.id}}</td>
+					<th>Product</th>
+					<th>Quantity</th>
+					<td>{{o.cart.cartPrice | currency:"USD":true:"2.2-2"}}</td>
+				</tr>
+				<tr *ngFor="let line of o.cart.lines">
+					<td colspan="2"></td>
+					<td>{{line.product.name}}</td>
+					<td>{{line.quantity}}</td>
+				</tr>
+			</template>
+		</tbody>
+	</table>
+</div>

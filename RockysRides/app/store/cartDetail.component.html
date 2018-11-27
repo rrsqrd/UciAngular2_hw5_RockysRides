@@ -1,0 +1,107 @@
+﻿<div class="navbar navbar-inverse bg-inverse">    
+	<div class="navbar-brand font-italic font-weight-bold" style="font-size:40px;color:red">ROCKYS RIDES</div>	
+</div>
+
+<div *ngIf="orderSent" class="m-a-1 text-xs-center">
+    <h2 style="color:red" >Thanks!</h2> 
+    <p>Thanks for placing your order with ROCKYS RIDES!</p> 
+    <p>We'll ship your goods as soon as possible.</p>    
+    <button class="btn btn-primary" routerLink="/store">Return to Store</button>
+    <div>
+        <br>
+        <h5>Order Total</h5>
+        <div>{{submittedOrder.cart.cartPrice | currency:"USD":true:"2.2-2"}}</div>
+    </div>
+    <div class="container">
+        <br>
+        <table class="table table-sm table-bordered table-striped p-a-1">
+            <thead class="thead-light">
+                <tr style="background-color:LightSteelBlue">
+                    <th>Quantity</th>
+                    <th>Product</th>
+                    <th class="text-xs-right">Price</th>
+                    <th class="text-xs-right">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>                
+                    <tr *ngFor="let line of submittedOrder.cart.lines">
+                        <td>{{line.quantity}}</td>
+                        <td>{{line.product.name}}</td>
+
+                        <td class="text-xs-right">
+                            {{line.product.price | currency:"USD":true:"2.2-2"}}
+                        </td>
+                        <td class="text-xs-right">
+                            {{(line.quantity * line.product.price) | currency:"USD":true:"2.2-2" }}
+                        </td>                      
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td class="text-xs-right"><h6>Order Total</h6></td>
+                        <td class="text-xs-right">{{submittedOrder.cart.cartPrice | currency:"USD":true:"2.2-2"}}</td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+
+<div *ngIf="!orderSent" class="m-a-1">
+    <h2 class="text-xs-center" style="color:red">Your Cart</h2>
+    <table class="table table-sm table-bordered table-striped p-a-1 table-light">
+        <thead>
+            <tr style="background-color:LightSteelBlue">
+                <th>Quantity</th>
+                <th>Product</th>
+                <th class="text-xs-right">Price</th>
+                <th class="text-xs-right">Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="cart.lines.length == 0">
+                <td colspan="4" class="text-xs-center">
+                    Your cart is empty
+                </td>
+            </tr>
+            <tr *ngFor="let line of cart.lines">
+                <td>
+                    <input type="number" class="form-control-sm" 
+                           style="width:5em" 
+                           [value]="line.quantity"
+                           (change)="cart.updateQuantity(line.product, 
+                                $event.target.value)"/>
+                </td>
+                <td>{{line.product.name}}</td>
+                <td class="text-xs-right">
+                    {{line.product.price | currency:"USD":true:"2.2-2"}}
+                </td>
+                <td class="text-xs-right">
+                    {{(line.lineTotal) | currency:"USD":true:"2.2-2" }}
+                </td>
+                <td class="text-xs-center">
+                    <button class="btn btn-sm btn-danger"
+                            (click)="cart.removeLine(line.product.id)">
+                        Remove
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-xs-right">Total:</td>
+                <td class="text-xs-right">
+                    {{cart.cartPrice | currency:"USD":true:"2.2-2"}}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div *ngIf="!orderSent"  class="text-xs-center">
+    <button class="btn btn-primary" routerLink="/store">Continue Shopping</button>
+    <button class="btn btn-secondary" (click)="submitOrder()" 
+		[disabled]="cart.lines.length == 0"> 
+        Checkout
+    </button>
+</div>
