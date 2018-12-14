@@ -20,10 +20,7 @@ export class RestDataSource
         this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
     }
 
-    // 11.26.2017 
-    // Wtf, months after course completion, now i'm seeing compilation errors
-    // related to the multiple return types from sendRequest(), see further on.
-    // Code changes made to resolve those errors:
+    // Code changes made to resolve compilation errors:
     // -changed return type to just as Observable<Product[]> or as Observable<Product>
     //      getProducts, saveProduct and updateProduct
     // -changed return type to just as Observable<Order[]> or as Observable<Order>    
