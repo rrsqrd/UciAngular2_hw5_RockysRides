@@ -18,7 +18,8 @@ var RestDataSource = (function () {
         this.http = http;
         this.baseUrl = PROTOCOL + "://" + location.hostname + ":" + PORT + "/";
     }
-    // Code changes made to resolve compilation errors:
+    // Was seeing compilation errors on return values.
+    // Resolved:
     // -changed return type to just as Observable<Product[]> or as Observable<Product>
     //      getProducts, saveProduct and updateProduct
     // -changed return type to just as Observable<Order[]> or as Observable<Order>    
